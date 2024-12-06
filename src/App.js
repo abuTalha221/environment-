@@ -7,8 +7,10 @@ import Signup from "./Components/Signup";
 function App() {
   return (
 
-    // <Login/>
-    <Signup/>
+    <div>
+      <p>hello</p>
+      <Signup/>
+    </div>
     
   );
 }
