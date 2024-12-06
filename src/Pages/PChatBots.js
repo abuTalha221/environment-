@@ -3,35 +3,32 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const API_KEY = "AIzaSyCACLvaqRzaSTqVPXlRSNa5PFHPEZ3-W1g";
 
-const ChatBot = () => {
+const PhysicalHealthChatBot = () => {
   const [messages, setMessages] = useState([
-    { role: "model", text: "Hi there! I'm your AI health coach. Let's begin. How are you feeling today?" },
+    { role: "model", text: "Hi there! I'm your AI coach for physical health improvement. Let's start by understanding your habits." },
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [assessmentStage, setAssessmentStage] = useState(0); // Tracks the current question stage
   const [userResponses, setUserResponses] = useState({}); // Tracks all user responses
 
-  const mentalHealthQuestions = [
-    "How would you describe your mood today?",
-    "Have you been feeling anxious or worried lately? If yes, can you describe the triggers?",
-    "How has your sleep been? Are you facing any challenges with falling or staying asleep?",
-    "Have you noticed any changes in your appetite or eating habits?",
-    "Do you feel overwhelmed or stressed? What might be causing this?",
-    "Have you been experiencing any physical symptoms like fatigue, rapid heartbeat, or shaking?",
-    "Are you able to enjoy activities that you usually like?",
-    "Have you had thoughts of harming yourself or ending your life? If yes, please seek immediate help.",
+  const physicalHealthQuestions = [
+    "How often do you exercise in a week?",
+    "What types of exercises do you usually perform? (e.g., cardio, strength training, yoga)",
+    "Do you follow a balanced diet? If yes, what does it usually include?",
+    "How much water do you drink daily?",
+    "How many hours of sleep do you get each night?",
+    "Do you consume a lot of processed or sugary foods?",
+    "What is your biggest challenge in maintaining physical health?",
   ];
 
   const healthSuggestions = {
-    mood: "Engage in activities that bring joy, like hobbies, socializing, or physical exercise.",
-    anxiety: "Practice relaxation techniques like deep breathing or mindfulness to reduce anxiety.",
-    sleep: "Establish a consistent bedtime routine and reduce screen time before sleep.",
-    appetite: "Focus on balanced meals and consider small, frequent meals if appetite is low.",
-    stress: "Identify stressors and try relaxation activities like yoga, meditation, or nature walks.",
-    physical: "Maintain a healthy lifestyle with regular exercise, hydration, and good nutrition.",
-    enjoyment: "Rekindle joy by engaging in activities you once enjoyed or trying something new.",
-    critical: "Please seek immediate professional help if you're feeling distressed.",
+    exercise: "Aim for at least 150 minutes of moderate exercise per week, including both cardio and strength training.",
+    balancedDiet: "Include a variety of fruits, vegetables, lean proteins, whole grains, and healthy fats in your diet.",
+    hydration: "Drink at least 8-10 glasses of water daily to stay hydrated and support bodily functions.",
+    sleep: "Aim for 7-9 hours of quality sleep each night to allow your body to recover and rejuvenate.",
+    processedFoods: "Reduce intake of processed and sugary foods. Opt for natural, whole foods instead.",
+    challenges: "Identify barriers to maintaining health and develop strategies like planning meals, setting exercise goals, or managing time better.",
   };
 
   const handleSend = async () => {
@@ -43,14 +40,14 @@ const ChatBot = () => {
     setMessages(newMessages);
 
     // Handle assessment questions
-    if (assessmentStage < mentalHealthQuestions.length) {
+    if (assessmentStage < physicalHealthQuestions.length) {
       const questionKey = Object.keys(healthSuggestions)[assessmentStage];
       setUserResponses((prev) => ({ ...prev, [questionKey]: input }));
 
       // Ask the next question
       setMessages((prev) => [
         ...prev,
-        { role: "model", text: mentalHealthQuestions[assessmentStage] },
+        { role: "model", text: physicalHealthQuestions[assessmentStage] },
       ]);
       setAssessmentStage((prevStage) => prevStage + 1);
     } else {
@@ -60,7 +57,9 @@ const ChatBot = () => {
         ...prev,
         {
           role: "model",
-          text: `Thanks for sharing your responses. Based on your answers, here are some tips for you:\n\n${suggestions}`,
+          text: `Thank you for sharing your responses. Based on your answers, here are some tips to improve your physical health:
+
+${suggestions}`,
         },
       ]);
     }
@@ -72,9 +71,7 @@ const ChatBot = () => {
   const generateSuggestions = (responses) => {
     const suggestions = [];
     for (const [key, response] of Object.entries(responses)) {
-      if (key === "critical" && response.toLowerCase().includes("yes")) {
-        suggestions.push(healthSuggestions[key]);
-      } else if (healthSuggestions[key]) {
+      if (healthSuggestions[key]) {
         suggestions.push(`${healthSuggestions[key]} (${key}: ${response})`);
       }
     }
@@ -93,7 +90,7 @@ const ChatBot = () => {
       <div className="max-w-3xl mx-auto p-8 bg-white rounded-xl shadow-lg flex flex-col flex-grow">
         {/* Header */}
         <div className="text-center mb-4">
-          <h1 className="text-2xl font-bold text-gray-800">AI Health Coach</h1>
+          <h1 className="text-2xl font-bold text-gray-800">AI Physical Health Coach</h1>
         </div>
 
         {/* Chat Container */}
@@ -141,4 +138,4 @@ const ChatBot = () => {
   );
 };
 
-export default ChatBot;
+export default PhysicalHealthChatBot;

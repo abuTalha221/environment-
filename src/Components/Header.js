@@ -8,7 +8,12 @@ const Header = () => {
   const handleClick = () => {
     navigate('/chatbots'); // Navigate to the ChatBots component when the button is clicked
   };
-
+  const phandleClick = () => {
+    navigate('/pchatbots'); // Navigate to the ChatBots component when the button is clicked
+  };
+  const rhandleClick = () => {
+    navigate('/rchatbots'); // Navigate to the ChatBots component when the button is clicked
+  };
   return (
     <div
       className='relative min-h-screen w-full bg-cover bg-center'
@@ -29,10 +34,22 @@ const Header = () => {
           Discover health insights tailored to your symptoms. Our AI-powered system helps you maintain a healthy lifestyle by offering personalized advice, anytime.
         </p>
         <button
-          className="border-2 border-[#EC733B] bg-[#f0f0f0] text-[#EC733B] px-6 py-3 rounded-lg text-lg hover:bg-[#EC733B] hover:text-white transition duration-300"
+          className="border-2 border-[#EC733B] my-3 bg-[#f0f0f0] text-[#EC733B] px-6 py-3 rounded-lg text-lg hover:bg-[#EC733B] hover:text-white transition duration-300"
           onClick={handleClick} // Add the onClick event to navigate to ChatBots component
         >
-          Take Personalized Health Tips <i className="fas fa-chevron-right ml-2"></i>
+           Mental Health Advisor <i className="fas fa-chevron-right ml-2"></i>
+        </button>
+        <button
+          className="border-2 border-[#EC733B] my-3 bg-[#f0f0f0] text-[#EC733B] px-6 py-3 rounded-lg text-lg hover:bg-[#EC733B] hover:text-white transition duration-300"
+          onClick={phandleClick} // Add the onClick event to navigate to ChatBots component
+        >
+          Physical Fitness Advisor <i className="fas fa-chevron-right ml-2"></i>
+        </button>
+        <button
+          className="border-2 border-[#EC733B] my-3 bg-[#f0f0f0] text-[#EC733B] px-6 py-3 rounded-lg text-lg hover:bg-[#EC733B] hover:text-white transition duration-300"
+          onClick={rhandleClick} // Add the onClick event to navigate to ChatBots component
+        >
+          Health Well Being Advisor <i className="fas fa-chevron-right ml-2"></i>
         </button>
       </div>
     </div>

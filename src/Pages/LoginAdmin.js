@@ -17,28 +17,7 @@ const Login = () => {
             password,
         };
 
-        try {
-            const response = await fetch('http://localhost/myapp/login.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: new URLSearchParams(loginData),
-            });
-
-            const result = await response.json();
-
-            if (result.message === 'Login successful') {
-                setMessage('Login successful!');
-                // Optionally redirect after success
-                // navigate('/home'); // Redirect to home or another page after login
-            } else {
-                setMessage('Invalid credentials');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            setMessage('An error occurred during login');
-        }
+        
     };
 
     return (
