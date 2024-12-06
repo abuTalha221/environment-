@@ -1,11 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const navigate = useNavigate(); // Hook for navigation
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        // Validate if passwords match
+        if (password !== confirmPassword) {
+            alert('Passwords do not match!');
+            return;
+        }
+
+        // Prepare data for submission
+        const userData = {
+            name,
+            email,
+            password,
+        };
+
+        try {
+            const response = await fetch('http://localhost/myapp/register.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams(userData),
+            });
+
+            const result = await response.json();
+            
+            if (result) {
+                alert('Registration successful!');
+                // Redirect using the URL from the backend response
+                window.location.href = result.redirect_url; // Redirect to the login page
+            } else {
+                alert('Registration failed!');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred during signup. Please try again.');
+        }
+    };
+
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
             <div className="bg-[#b7e5f5] p-8 rounded-lg shadow-lg max-w-md w-full">
                 <h2 className="text-2xl font-bold text-center mb-6">Sign Up</h2>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
                             Name
@@ -15,6 +62,8 @@ const Signup = () => {
                             id="name"
                             placeholder="Enter your name"
                             className="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring focus:ring-purple-300"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
                         />
                     </div>
 
@@ -27,6 +76,8 @@ const Signup = () => {
                             id="email"
                             placeholder="Enter your email"
                             className="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring focus:ring-purple-300"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
 
@@ -39,6 +90,8 @@ const Signup = () => {
                             id="password"
                             placeholder="Enter your password"
                             className="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring focus:ring-purple-300"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
 
@@ -51,6 +104,8 @@ const Signup = () => {
                             id="confirm-password"
                             placeholder="Confirm your password"
                             className="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring focus:ring-purple-300"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
                         />
                     </div>
 
@@ -62,7 +117,7 @@ const Signup = () => {
                             Sign Up
                         </button>
 
-                        <a href="#" className="text-sm text-[#EC733B] hover:text-[#EC733B]">
+                        <a href="/login" className="text-sm text-[#EC733B] hover:text-[#EC733B]">
                             Already have an account?
                         </a>
                     </div>
