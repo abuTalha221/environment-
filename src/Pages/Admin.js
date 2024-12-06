@@ -93,11 +93,11 @@ const Admin = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <div className="bg-indigo-500 text-white shadow-lg rounded-lg p-6">
                 <h3 className="text-lg font-bold">Total Users</h3>
-                <p className="text-3xl font-semibold mt-4">1,245</p>
+                <p className="text-3xl font-semibold mt-4">100</p>
               </div>
               <div className="bg-pink-500 text-white shadow-lg rounded-lg p-6">
                 <h3 className="text-lg font-bold">Pending Account Deletions</h3>
-                <p className="text-3xl font-semibold mt-4">3</p>
+                <p className="text-3xl font-semibold mt-4">2</p>
               </div>
               <div className="bg-yellow-500 text-white shadow-lg rounded-lg p-6">
                 <h3 className="text-lg font-bold">New Notifications</h3>

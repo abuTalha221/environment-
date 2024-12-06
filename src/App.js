@@ -22,7 +22,8 @@ const App = () => {
         <Route path="/chatbots" element={<ChatBots />} />
         <Route path="/pchatbots" element={<PChatBots />} />
         <Route path="/rchatbots" element={<RChatBots />} />
-        <Route path="/admin" element={<LoginAdmin />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/ladmin" element={<LoginAdmin />} />
 
       </Routes>
     </BrowserRouter>

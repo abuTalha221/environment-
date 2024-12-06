@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../Components/Navbar';
 
-const Login = () => {
+
+
+const AdminLogin = () => {
+    const adminClick = () => {
+        navigate('/ladmin'); // Navigate to the ChatBots component when the button is clicked
+      };
     const [username, setUsername] = useState(''); // Update state to store username
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
@@ -10,6 +15,7 @@ const Login = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
+        
 
         // Prepare login data
         const loginData = {
@@ -56,6 +62,7 @@ const Login = () => {
 
                     <div className="flex items-center justify-between">
                         <button
+                        onClick={adminClick}
                             type="submit"
                             className="bg-[#EC733B] text-white font-bold py-2 px-4 rounded-lg hover:bg-[#EC733B] focus:outline-none focus:ring focus:ring-purple-300"
                         >
@@ -79,4 +86,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default AdminLogin;
