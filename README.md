@@ -8,7 +8,16 @@ A cutting-edge AI-powered health chatbot designed to provide users with personal
 - *Interactive Chat Interface*: Engaging and user-friendly interaction for seamless communication.  
 - *Data Persistence*: Saves historical chat data for better continuity and personalized recommendations.  
 
-## Getting Started  
+## Getting Started 
+## Why This Project?  
+
+In today's fast-paced world, accessing reliable and personalized health information is a significant challenge. This project aims to bridge that gap by providing an AI-powered health chatbot that offers:  
+
+- *Personalized Guidance*: Tailored health tips and recommendations based on individual queries.  
+- *Accessibility*: Immediate assistance, anytime and anywhere, empowering users to make informed health decisions.  
+- *Awareness*: Helps users better understand health conditions and promotes well-being in alignment with SDG 3 (Good Health and Well-being).  
+
+This chatbot enhances healthcare accessibility and awareness, making health information more user-centric and efficient.
 
 ### Prerequisites  
 Ensure you have the following installed:  
