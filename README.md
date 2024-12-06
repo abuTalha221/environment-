@@ -1,3 +1,25 @@
+# Personalized AI Health Chatbot  
+
+A cutting-edge AI-powered health chatbot designed to provide users with personalized health insights, suggestions, and condition-specific responses. The chatbot leverages artificial intelligence to categorize health conditions and tailor responses to individual needs, promoting better health awareness and decision-making.
+
+## Features  
+- *Personalized Health Tips*: Tailored suggestions based on user queries and inputs.  
+- *Health Condition Categorization*: AI-driven categorization for conditions such as fever, depression, and more.  
+- *Interactive Chat Interface*: Engaging and user-friendly interaction for seamless communication.  
+- *Data Persistence*: Saves historical chat data for better continuity and personalized recommendations.  
+
+## Getting Started  
+
+### Prerequisites  
+Ensure you have the following installed:  
+- Node.js (v14.x or higher)  
+- npm (v6.x or higher)  
+
+### Installation  
+1. Clone the repository:  
+   ```bash  
+   git clone https://github.com/abuTalha221/environment-.git  
+   cd environment-
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
