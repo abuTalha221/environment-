@@ -42,6 +42,11 @@ const Navbar = () => {
               Sign Up <i className="fas fa-chevron-right ml-2"></i>
             </button>
           </Link>
+          <Link to="/admin">
+            <button className='text-white bg-[#EC733B] px-6 py-2 border-2 border-[#EC733B] rounded-lg hover:bg-[#d25e2d] transition-transform duration-300 ease-in-out transform hover:translate-x-2'>
+              Admin Panel <i className="fas fa-lock ml-2"></i>
+            </button>
+          </Link>
         </div>
 
         <div className="md:hidden flex items-center">

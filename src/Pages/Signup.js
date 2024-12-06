@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../Components/Navbar';
 
 const Signup = () => {
     const [name, setName] = useState('');
@@ -35,12 +36,12 @@ const Signup = () => {
 
             const result = await response.json();
             
-            if (result) {
+            if (result.success) { // Ensure success response
                 alert('Registration successful!');
-                // Redirect using the URL from the backend response
-                window.location.href = result.redirect_url; // Redirect to the login page
+                // Use `navigate` to redirect the user to the login page
+                navigate(result.redirect_url || 'login'); // Fallback to '/login' if redirect_url is missing
             } else {
-                alert('Registration failed!');
+                alert(result.message || 'Registration failed!');
             }
         } catch (error) {
             console.error('Error:', error);
@@ -50,6 +51,7 @@ const Signup = () => {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
+            <Navbar/>
             <div className="bg-[#b7e5f5] p-8 rounded-lg shadow-lg max-w-md w-full">
                 <h2 className="text-2xl font-bold text-center mb-6">Sign Up</h2>
                 <form onSubmit={handleSubmit}>

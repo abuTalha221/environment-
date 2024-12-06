@@ -5,15 +5,25 @@ const API_KEY = "AIzaSyCACLvaqRzaSTqVPXlRSNa5PFHPEZ3-W1g";
 
 const ChatBot = () => {
   const [messages, setMessages] = useState([
-    { role: "model", text: "Hi there! I'm your AI health coach. What's your health goal today?" },
+    { role: "model", text: "Hi there! I'm here to assess your mental health. Let's get started with some questions." },
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [goal, setGoal] = useState(null); // Track user's health goal
-  const [userInfo, setUserInfo] = useState(null); // Track user's information
+  const [questionIndex, setQuestionIndex] = useState(0);
+  const [userAnswers, setUserAnswers] = useState([]); // Store user's answers
+  const [mentalHealthResult, setMentalHealthResult] = useState(null); // Store mental health result
 
   const genAI = new GoogleGenerativeAI(API_KEY);
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+  // Define mental health questions
+  const questions = [
+    "On a scale of 1 to 10, how would you rate your overall mood in the last week?",
+    "Have you been feeling anxious or stressed recently? If yes, how often?",
+    "How have you been sleeping? Any trouble falling or staying asleep?",
+    "Do you feel overwhelmed by your daily responsibilities or tasks?",
+    "Have you lost interest in activities you used to enjoy?",
+  ];
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -23,42 +33,56 @@ const ChatBot = () => {
     setMessages(newMessages);
     setInput("");
 
-    // Handle different conversation stages
-    if (!goal) {
-      setGoal(input.toLowerCase()); // Store health goal
+    // Store the user's answer
+    const updatedAnswers = [...userAnswers, input];
+    setUserAnswers(updatedAnswers);
+
+    // If there are more questions to ask, proceed to the next question
+    if (questionIndex < questions.length - 1) {
       setMessages((prev) => [
         ...prev,
-        { role: "model", text: "Great! To personalize a plan, tell me your age range (e.g., 20s, 30s), gender, activity level (sedentary, active, etc.), and a brief description of your diet." },
+        { role: "model", text: questions[questionIndex + 1] },
       ]);
-    } else if (!userInfo) {
-      // Gather user information
-      setUserInfo(input);
-      const response = await model.generateContent(getPersonalizedPlan(goal, userInfo));
-      setMessages((prev) => [...prev, { role: "model", text: response.response.text() }]);
+      setQuestionIndex(questionIndex + 1);
     } else {
-      console.error("Conversation ended. User can start a new goal.");
+      // If all questions are answered, analyze the answers
+      const analysis = await analyzeMentalHealth(updatedAnswers);
+      setMentalHealthResult(analysis);
+      setMessages((prev) => [
+        ...prev,
+        { role: "model", text: `Based on your answers, here's an analysis of your mental health: ${analysis}` },
+      ]);
     }
 
     setIsLoading(false);
   };
 
-  const getPersonalizedPlan = (goal, userInfo) => {
-    const plans = {
-      "lose weight": `Let's focus on healthy habits to reach your weight loss goals! Based on your ${userInfo}, here are 2 steps to get you started:
-      1. **Hydrate!** Aim to drink 8 glasses of water daily. This helps with feeling full and reduces cravings.
-      2. **Swap sugary drinks.** Replace one sugary drink per day with water or unsweetened tea. Small changes add up!`,
-      "improve sleep": `Sleep is crucial for overall health! Here are 2 tips to improve your sleep based on your ${userInfo}:
-      1. **Relaxing routine.** Establish a relaxing bedtime routine (bath, reading) 30 minutes before sleep.
-      2. **Consistent schedule.** Go to bed and wake up at similar times each day, even on weekends.`,
-      "reduce stress": `Managing stress is key to well-being! Here are 2 tips based on your ${userInfo}:
-      1. **Short breaks.** Take 5-minute breaks throughout the day for deep breathing exercises or meditation.
-      2. **Identify stressors.** Reflect on what stresses you and find healthy ways to manage them (e.g., exercise, hobbies).`,
-      "increase energy levels": `Feeling tired? Here are 2 tips to boost your energy based on your ${userInfo}:
-      1. **Stay hydrated.** Dehydration can zap your energy. Aim for 8 glasses of water daily.
-      2. **Move your body!** Aim for at least 30 minutes of moderate-intensity exercise most days of the week.`,
-    };
+  // Analyze mental health based on user responses
+  const analyzeMentalHealth = async (answers) => {
+    // This is a simple mockup. Replace it with a real analysis based on patterns in the user's answers.
+    let moodScore = 0;
+    answers.forEach((answer, idx) => {
+      if (questions[idx].includes("rate your overall mood") && parseInt(answer) < 5) {
+        moodScore -= 1;
+      }
+      if (answer.toLowerCase().includes("anxious") || answer.toLowerCase().includes("stressed")) {
+        moodScore -= 1;
+      }
+      if (answer.toLowerCase().includes("sleep trouble") || answer.toLowerCase().includes("overwhelmed")) {
+        moodScore -= 1;
+      }
+      if (answer.toLowerCase().includes("lost interest")) {
+        moodScore -= 1;
+      }
+    });
 
-    return plans[goal] || "Sorry, I can't provide a plan yet. This is a developing feature.";
+    if (moodScore < -3) {
+      return "It seems like you're struggling with some mental health challenges. It might help to talk to a mental health professional.";
+    } else if (moodScore >= -3 && moodScore < 0) {
+      return "You're showing some signs of stress or low mood. It may help to take a break and practice self-care.";
+    } else {
+      return "You're doing well overall, but it's always good to keep checking in on your mental health.";
+    }
   };
 
   // Handle the Enter key press
@@ -73,7 +97,7 @@ const ChatBot = () => {
       <div className="max-w-3xl mx-auto p-8 bg-white rounded-xl shadow-xl flex flex-col flex-grow">
         {/* Header */}
         <div className="text-center mb-6">
-          <h1 className="text-3xl font-semibold text-gray-900">AI Health Coach</h1>
+          <h1 className="text-3xl font-semibold text-gray-900 bg-[#EC733B]">AI Mental Health Checker</h1>
         </div>
 
         {/* Chat Container */}
@@ -108,7 +132,7 @@ const ChatBot = () => {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown} // Listen for Enter key press
             className="w-full p-3 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-600 placeholder-gray-400"
-            placeholder="Type your prompt..."
+            placeholder="Type your answer..."
           />
           <button
             onClick={handleSend}
