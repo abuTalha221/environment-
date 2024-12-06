@@ -5,7 +5,8 @@ import Login from './Pages/Login';
 import Signup from './Pages/Signup';
 import Navbar from './Components/Navbar'; 
 import ChatBots from './Pages/ChatBots'; 
-import Admin from './Pages/Admin';// Assuming Navbar is in the components folder
+import Admin from './Pages/Admin';
+import LoginAdmin from './Pages/LoginAdmin';// Assuming Navbar is in the components folder
 
 const App = () => {
   return (

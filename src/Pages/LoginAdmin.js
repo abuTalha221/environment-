@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../Components/Navbar';
 
 const Login = () => {
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState(''); // Update state to store username
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
@@ -13,7 +13,7 @@ const Login = () => {
 
         // Prepare login data
         const loginData = {
-            email,
+            username, // Use username here
             password,
         };
 
@@ -43,21 +43,21 @@ const Login = () => {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
-            <Navbar/>
+            <Navbar />
             <div className="bg-[#b7e5f5] p-8 rounded-lg shadow-lg max-w-md w-full">
-                <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
+                <h2 className="text-2xl font-bold text-center mb-6">Admin Login</h2>
                 <form onSubmit={handleLogin}>
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-                            Email
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+                            Username
                         </label>
                         <input
-                            type="email"
-                            id="email"
-                            placeholder="Enter your email"
+                            type="text"
+                            id="username" // Changed from email to username
+                            placeholder="Enter admin username"
                             className="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring focus:ring-purple-300"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            value={username} // Bind state to username
+                            onChange={(e) => setUsername(e.target.value)} // Update username state
                         />
                     </div>
 
